@@ -48,15 +48,15 @@ public class ContactController {
 //        // The below code helps you to redirect to the contact page again after we capture the user's data.
 //        return new ModelAndView("redirect:/contact");
 //    }
+
     @RequestMapping(value="/saveMsg",method= RequestMethod.POST)
     public String saveMessage(@Valid @ModelAttribute("contact") Contact contact , Errors errors) {
        if(errors.hasErrors()) {
            log.error("Contact form validation failed due to : " + errors.toString());
            return "contact.html";
        }
+       // If the validations are successful , we move over to the service layer.
         contactService.saveMessageDetails(contact);
-        contactService.setCounter(contactService.getCounter() + 1);
-        log.info("Number of times the Contact form is submitted : " + contactService.getCounter());
         return "redirect:/contact";
     }
 }

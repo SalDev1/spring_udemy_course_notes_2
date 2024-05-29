@@ -1,5 +1,6 @@
 package com.salcorps.springbootdemo1.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -11,11 +12,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class ProjectConfig {
-
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
        // Permits all requests inside the Web Application.
-        http.csrf((csrf)->csrf.disable())
+        http.csrf((csrf)->
+                        csrf
+                                .ignoringRequestMatchers("/saveMsg")
+                                .ignoringRequestMatchers(PathRequest.toH2Console())
+                )
                 .authorizeHttpRequests((authorize) ->
                         authorize
                                 .requestMatchers("/","/home").permitAll()
@@ -25,7 +29,10 @@ public class ProjectConfig {
                                 .requestMatchers("/courses").permitAll()
                                 .requestMatchers("/about").permitAll()
                                 .requestMatchers("/assets/**").permitAll()
+                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/dashboard").authenticated()
+                                .requestMatchers(PathRequest.toH2Console()).permitAll()
                 )
                 .formLogin((loginConfiguer)->
                         loginConfiguer.loginPage("/login")
@@ -39,6 +46,8 @@ public class ProjectConfig {
                                 .permitAll())
 
                 .httpBasic(Customizer.withDefaults());
+
+        http.headers(headersConfigurer -> headersConfigurer.frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
         return http.build();
     }
 
@@ -53,7 +62,7 @@ public class ProjectConfig {
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("54321")
-                .roles("USER","ADMIN")
+                .roles("ADMIN")
                 .build();
 
         return new InMemoryUserDetailsManager(user,admin);
