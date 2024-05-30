@@ -16,6 +16,7 @@ import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 //@Service --> Tells the Spring Container that a class is been
 // annotated as service layer.
@@ -43,5 +44,19 @@ public class ContactService {
             isSaved = true;
         }
         return isSaved;
+    }
+
+    public List<Contact> findMsgsWithOpenStatus() {
+        List<Contact> contactMsgs = contactRepository.findMsgsWithStatus(EazySchoolConstants.OPEN);
+        return contactMsgs;
+    }
+
+    public boolean updateMsgStatus(int contactId, String updatedBy) {
+        boolean isUpdated = false;
+        int res = contactRepository.updateMsgStatus(contactId,EazySchoolConstants.CLOSE,updatedBy);
+        if(res > 0) {
+            isUpdated = true;
+        }
+        return isUpdated;
     }
 }

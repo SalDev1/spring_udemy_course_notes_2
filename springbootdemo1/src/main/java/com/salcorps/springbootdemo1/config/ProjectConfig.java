@@ -3,6 +3,7 @@ package com.salcorps.springbootdemo1.config;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -11,6 +12,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableAspectJAutoProxy
 public class ProjectConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -22,6 +24,8 @@ public class ProjectConfig {
                 )
                 .authorizeHttpRequests((authorize) ->
                         authorize
+                                .requestMatchers("/displayMessages").hasRole("ADMIN")
+                                .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                                 .requestMatchers("/","/home").permitAll()
                                 .requestMatchers("/holidays/**").permitAll()
                                 .requestMatchers("/contact").permitAll()
