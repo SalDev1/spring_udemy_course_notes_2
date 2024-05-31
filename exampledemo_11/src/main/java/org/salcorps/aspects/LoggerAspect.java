@@ -27,6 +27,7 @@ public class LoggerAspect {
         logger.info(joinPoint.getSignature().toString() + "method execution end");
     }
 
+    // Annotation style of defining your beans. 
     @Around("@annotation(org.salcorps.interfaces.LogAspect)")
     public void logWithAnnotation(ProceedingJoinPoint joinPoint) throws Throwable {
         logger.info(joinPoint.toString() + " method execution start");
@@ -36,7 +37,7 @@ public class LoggerAspect {
         long timeElapsed = Duration.between(start, finish).toMillis();
         logger.info("Time took to execute the method : "+timeElapsed);
         logger.info(joinPoint.getSignature().toString() + " method execution end");
-    }
+    }   
     
     @AfterThrowing(value = "execution(* org.salcorps.services.*.*(..))",throwing = "ex")
     public void logException(JoinPoint joinPoint, Exception ex) {
