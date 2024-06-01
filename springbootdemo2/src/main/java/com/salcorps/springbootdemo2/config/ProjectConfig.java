@@ -20,6 +20,7 @@ public class ProjectConfig {
         http.csrf((csrf)->
                         csrf
                                 .ignoringRequestMatchers("/saveMsg")
+                                .ignoringRequestMatchers("/public/**")
                                 .ignoringRequestMatchers(PathRequest.toH2Console())
                 )
                 .authorizeHttpRequests((authorize) ->
@@ -35,6 +36,7 @@ public class ProjectConfig {
                                 .requestMatchers("/assets/**").permitAll()
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/logout").permitAll()
+                                .requestMatchers("/public/**").permitAll()
                                 .requestMatchers("/dashboard").authenticated()
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 )
