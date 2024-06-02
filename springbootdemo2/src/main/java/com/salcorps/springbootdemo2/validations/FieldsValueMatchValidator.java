@@ -20,6 +20,22 @@ public class FieldsValueMatchValidator implements ConstraintValidator<FieldsValu
         Object fieldValue = new BeanWrapperImpl(value).getPropertyValue(field);
         Object fieldMatchValue = new BeanWrapperImpl(value).getPropertyValue(fieldMatch);
 
+        // Your field is getting validated two times in a row.
+//        if(fieldValue != null) {
+//            // If the hashed value exists within the password,
+//            // return true , as it is encoded with Bcrypt Algorithm.
+//            if(fieldValue.toString().startsWith("$2a")) {
+//                return true;
+//            }
+//            else {
+//                // If the password is in the normal text form , do this.
+//                return fieldValue.equals(fieldMatchValue);
+//            }
+//        }
+//        else {
+//            return fieldMatchValue == null;
+//        }
+
         if(fieldValue != null) {
             return fieldValue.equals(fieldMatchValue);
         }
