@@ -6,6 +6,7 @@ import com.salcorps.springbootdemo2.annotation.PasswordValidator;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -35,6 +36,10 @@ public class Person extends BaseEntity {
     @Size(min=3,message = "Name must be least 3 characters long")
     private String name;
 
+    @NotBlank(message="Mobile Num must not be blank")
+    @Pattern(regexp = "(^$|[0-9]{10})",message="Name must be at least 3 characters long")
+    private String mobileNumber;
+
     @NotBlank(message = "Email must not be blank")
     @Email(message = "Please provide a valid email address")
     private String email;
@@ -54,7 +59,11 @@ public class Person extends BaseEntity {
     @Transient
     private String confirmPwd;
 
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST, targetEntity = Roles.class)
+    @JoinColumn(name = "role_id",referencedColumnName = "roleId",nullable = false)
     private Roles roles;
 
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, targetEntity = Address.class)
+    @JoinColumn(name = "address_id",referencedColumnName = "addressId",nullable = false)
     private Address address;
 }
