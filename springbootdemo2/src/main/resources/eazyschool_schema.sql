@@ -38,7 +38,17 @@ CREATE TABLE IF NOT EXISTS `person` (
   PRIMARY KEY(`person_id`)
   FOREIGN KEY(role_id) REFERENCES roles(role_id);
   FOREIGN KEY(address_id) REFERENCES address(address_id);
-)
+);
+
+CREATE TABLE IF NOT EXISTS `class` (
+  `class_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `created_by` varchar(50) NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `updated_by` varchar(50) DEFAULT NULL,
+   PRIMARY KEY(`class_id`)
+);
 
 CREATE TABLE IF NOT EXISTS `roles` (
   `role_id` int NOT NULL AUTO_INCREMENT,
@@ -48,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `updated_at` TIMESTAMP DEFAULT NULL,
   `updated_by` varchar(50) DEFAULT NULL,
   PRIMARY KEY(`role_id`)
-)
+);
 
 CREATE TABLE IF NOT EXISTS `address` (
   `address_id` int NOT NULL AUTO_INCREMENT,
