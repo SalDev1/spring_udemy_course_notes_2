@@ -27,7 +27,7 @@ public class ProjectConfig {
                 )
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("/displayMessages").hasRole("ADMIN")
+                                .requestMatchers("/displayMessages/**").hasRole("ADMIN")
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                                 .requestMatchers("/displayProfile").authenticated()

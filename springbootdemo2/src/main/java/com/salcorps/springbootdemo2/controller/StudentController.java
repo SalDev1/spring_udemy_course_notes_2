@@ -23,6 +23,6 @@ public class StudentController {
         Person person = (Person) session.getAttribute("loggedInPerson");
         ModelAndView modelAndView = new ModelAndView("courses_enrolled.html");
         modelAndView.addObject("person",person);
-
+        return modelAndView;
     }
 }
