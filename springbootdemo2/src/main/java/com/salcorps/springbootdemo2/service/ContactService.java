@@ -61,26 +61,17 @@ public class ContactService {
                 sortDir.equals("asc") ? Sort.by(sortField).ascending()
                         : Sort.by(sortField).descending());
 
-        Page<Contact> msgPage = contactRepository.findByStatus(
+        Page<Contact> msgPage = contactRepository.findOpenMsgs(
                 EazySchoolConstants.OPEN, pageable);
         return msgPage;
     }
 
     public boolean updateMsgStatus(int contactId, String updatedBy) {
         boolean isUpdated = false;
-        // Check if the contact already exists or not.
-        Optional<Contact> contact = contactRepository.findById(contactId);
-
-        // update the required params after fetching the contact.
-        contact.ifPresent(contact1 -> {
-            contact1.setStatus(EazySchoolConstants.CLOSE);
-            contact1.setUpdatedBy(updatedBy);
-            contact1.setUpdatedAt(LocalDateTime.now());
-        });
-
         // Invoke the save method to reflect the new changes.
-        Contact updatedContact =  contactRepository.save(contact.get());
-        if(null != updatedContact && updatedContact.getUpdatedBy() != null) {
+        //Contact updatedContact =  contactRepository.save(contact.get());
+        int rows = contactRepository.updateMsgStatus(EazySchoolConstants.CLOSE,contactId);
+        if(rows > 0) {
             isUpdated = true;
         }
         return isUpdated;
