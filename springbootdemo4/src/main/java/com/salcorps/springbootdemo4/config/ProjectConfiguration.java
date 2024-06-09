@@ -14,20 +14,20 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ProjectConfiguration {
     // The main purpose of this bean that it
     // helps us enter the auth credentials.
-    @Bean
-    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
-        return new BasicAuthRequestInterceptor("admin@eazyschool.com","admin");
-    }
-    @Bean
-    public RestTemplate restTemplate() {
-        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
-        return restTemplateBuilder.basicAuthentication("admin@eazyschool.com","admin").build();
-    }
-    @Bean
-    public WebClient webClient() {
-        return WebClient.builder().
-                filter(ExchangeFilterFunctions
-                        .basicAuthentication("admin@eazyschool.com","admin"))
-                .build();
-    }
+//    @Bean
+//    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
+//        return new BasicAuthRequestInterceptor("admin@eazyschool.com","admin");
+//    }
+//    @Bean
+//    public RestTemplate restTemplate() {
+//        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
+//        return restTemplateBuilder.basicAuthentication("admin@eazyschool.com","admin").build();
+//    }
+//    @Bean
+//    public WebClient webClient() {
+//        return WebClient.builder().
+//                filter(ExchangeFilterFunctions
+//                        .basicAuthentication("admin@eazyschool.com","admin"))
+//                .build();
+//    }
 }

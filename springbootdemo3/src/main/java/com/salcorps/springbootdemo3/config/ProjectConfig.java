@@ -24,6 +24,7 @@ public class ProjectConfig {
                                 .ignoringRequestMatchers("/saveMsg")
                                 .ignoringRequestMatchers("/public/**")
                                 .ignoringRequestMatchers("/api/**")
+                                .ignoringRequestMatchers("/data-api/**")
                                 .ignoringRequestMatchers("/")
                                 .ignoringRequestMatchers(PathRequest.toH2Console())
                 )
@@ -34,6 +35,8 @@ public class ProjectConfig {
                                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                                 .requestMatchers("/displayProfile").authenticated()
                                 .requestMatchers("/updateProfile").authenticated()
+                                .requestMatchers("/api/**").authenticated()
+                                .requestMatchers("/data-api/**").authenticated()
                                 .requestMatchers("/student/**").hasRole("STUDENT")
                                 .requestMatchers("/","/home").permitAll()
                                 .requestMatchers("/holidays/**").permitAll()
@@ -45,6 +48,14 @@ public class ProjectConfig {
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/public/**").permitAll()
+                                // Configuration by Spring Data REST.
+                                .requestMatchers("/profile/**").permitAll()
+                                .requestMatchers("/courseses/**").permitAll()
+                                .requestMatchers("/contacts/**").permitAll()
+
+//                               // Configuration for HAL explorer.
+                                .requestMatchers("/data-api").permitAll()
+                                .requestMatchers("/admin/**").permitAll()
                                 .requestMatchers("/dashboard").authenticated()
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 )

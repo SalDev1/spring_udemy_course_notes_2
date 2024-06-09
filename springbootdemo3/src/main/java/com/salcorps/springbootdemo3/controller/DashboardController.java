@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @Controller
 public class DashboardController {
-
     @Autowired
     PersonRepository personRepository;
-
     // We are trying to identify the username and its roles of the verified user.
     @RequestMapping("/dashboard")
     public String displayDashboard(Model model , Authentication authentication, HttpSession session) {
@@ -32,5 +30,12 @@ public class DashboardController {
         // This session will be used in the profileController.
         session.setAttribute("loggedInPerson",person);
         return "dashboard.html";
+    }
+    private void logMessages() {
+        log.error("Error Message from the Dashboard page");
+        log.warn("Warning Message from the Dashboard page");
+        log.info("Info message from the Dashboard page");
+        log.debug("Debug message from the Dashboard page");
+        log.trace("Trace message from the Dashboard page");
     }
 }
