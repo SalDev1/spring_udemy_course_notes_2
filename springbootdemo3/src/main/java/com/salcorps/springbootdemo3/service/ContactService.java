@@ -1,6 +1,7 @@
 package com.salcorps.springbootdemo3.service;
 
 
+import com.salcorps.springbootdemo3.config.EazySchoolProps;
 import com.salcorps.springbootdemo3.constants.EazySchoolConstants;
 import com.salcorps.springbootdemo3.controller.HomeController;
 import com.salcorps.springbootdemo3.model.Contact;
@@ -30,9 +31,11 @@ import java.util.Optional;
 public class ContactService {
     // Save Contact Details to DB.
    // private static Logger log = LoggerFactory.getLogger(HomeController.class);
-
     @Autowired
     private ContactRepository contactRepository;
+
+    @Autowired
+    EazySchoolProps eazySchoolProps;
 
     public ContactService() {
         System.out.println("Contact Service Bean Initialized");
@@ -55,8 +58,11 @@ public class ContactService {
     }
 
     public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField,String sortDir) {
+        int pageSize = eazySchoolProps.getPageSize();
 
-        int pageSize = 5;
+        if(null != eazySchoolProps.getContact() && null != eazySchoolProps.getContact().get("pageSize")) {
+            pageSize = Integer.parseInt(eazySchoolProps.getContact().get("pageSize").trim());
+        }
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending()
                         : Sort.by(sortField).descending());

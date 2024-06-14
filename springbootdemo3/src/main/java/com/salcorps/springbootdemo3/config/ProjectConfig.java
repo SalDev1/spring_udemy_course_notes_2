@@ -25,6 +25,7 @@ public class ProjectConfig {
                                 .ignoringRequestMatchers("/public/**")
                                 .ignoringRequestMatchers("/api/**")
                                 .ignoringRequestMatchers("/data-api/**")
+                                .ignoringRequestMatchers("/eazyschool/actuator/**")
                                 .ignoringRequestMatchers("/")
                                 .ignoringRequestMatchers(PathRequest.toH2Console())
                 )
@@ -48,6 +49,7 @@ public class ProjectConfig {
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/logout").permitAll()
                                 .requestMatchers("/public/**").permitAll()
+                                .requestMatchers("/actuator/**").permitAll()
                                 // Configuration by Spring Data REST.
                                 .requestMatchers("/profile/**").permitAll()
                                 .requestMatchers("/courseses/**").permitAll()
